@@ -7,6 +7,7 @@ class CreateLocations < ActiveRecord::Migration
       t.float :maxX
       t.float :minY
       t.float :maxY
+      t.boolean :isOutside
 
       t.timestamps null: false
     end

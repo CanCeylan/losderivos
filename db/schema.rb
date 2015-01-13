@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 20150113085823) do
     t.float    "maxX",       limit: 24
     t.float    "minY",       limit: 24
     t.float    "maxY",       limit: 24
+    t.boolean  "isOutside",  limit: 1
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
