@@ -19,7 +19,7 @@ class LogHistory
 
 			visitor_list.each do |v|
 
-				@client = Client.find_by_name(v["MapInfo"]["mapHierarchyString"])
+				@client = Client.find_by_name(v["MapInfo"]["mapHierarchyString"]) # burada data gelince daha duzgun bi parse islemi yapilacak, su an yanlis calisiyor
 
 				Log.create({macID: v["macAddress"], 
 					reason: v["historyLogReason"],
@@ -32,7 +32,7 @@ class LogHistory
 					dot11status: v["dot11Status"],
 					isGuest: v["guestUser"],
 					floor: v["MapInfo"]["floorRefId"],
-					client: @client,
+					client: @client.id,
 					location: Location.get_location(v["MapCoordinate"]["x"], v["MapCoordinate"]["y"], @client.id)
 					})
 			end

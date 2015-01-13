@@ -1,5 +1,6 @@
 class Location < ActiveRecord::Base
   belongs_to :client
+  has_many :logs
 
   	def self.get_location(x, y, client)
 		Location.all.where(:client_id => client).each do |zone|
