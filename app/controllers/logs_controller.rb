@@ -13,17 +13,19 @@ class LogsController < ApplicationController
 
 		puts response
 		visitor_list = JSON.parse(response)["Locations"]["entries"]
-		#variables
+
 		visitor_list.each do |v|
-			Log.create({mac_id: v["macAddress"], 
+			Log.create({macID: v["macAddress"], 
 						reason: v["historyLogReason"],
 						hierarchy: v["MapInfo"]["mapHierarchyString"],
 						mapX: v["MapCoordinate"]["x"],
 						mapY: v["MapCoordinate"]["y"],
-						firstTime: v["Statistics"]["firstLocatedTime"],
-						lastTime: v["Statistics"]["lastLocatedTime"],
-						serverTime: v["Statistics"]["currentServerTime"],
-						location: Location.get_location(v["MapCoordinate"])
+						firstLocatedTime: v["Statistics"]["firstLocatedTime"],
+						lastLocatedTime: v["Statistics"]["lastLocatedTime"],
+						ip: v["ipAddress"],
+						username: v["userName"],
+						dot11status: v["dot11Status"],
+						isGuest: v["guestUser"],
 						})
 		end
 	
