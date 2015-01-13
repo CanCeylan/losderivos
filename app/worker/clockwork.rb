@@ -33,6 +33,7 @@ module Clockwork
 		puts "Hey! --> Running #{job}, at #{time}"
 	end
 
-	every(10.seconds, 'frequent.job'){HardWorker.perform('ocan',2)}
+	every(10.seconds, 'frequent.job'){HardWorker.perform_async('ocan',2)}
+	every(1.day, 'log_history.job'){LogHistory.perform_async()}
 
 end
