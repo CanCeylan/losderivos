@@ -26,11 +26,8 @@ class LogsController < ApplicationController
 						username: v["userName"],
 						dot11status: v["dot11Status"],
 						isGuest: v["guestUser"],
+						floor: v["MapInfo"]["floorRefId"]
 						})
 		end
-	
-
 	end
-
-
 end

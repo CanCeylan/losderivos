@@ -26,6 +26,11 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'redis'
 gem 'sidekiq'
+gem 'rest_client'
+gem 'json'
+gem 'time_difference'
+gem 'rails_12factor'
+gem 'responders', '~> 2.0' 
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
