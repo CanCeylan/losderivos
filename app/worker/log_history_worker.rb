@@ -18,9 +18,11 @@ class LogHistory
 			visitor_list = JSON.parse(response)["Locations"]["entries"]
 
 			visitor_list.each do |v|
+
+				@client = Client.find_by_name(v["MapInfo"]["mapHierarchyString"])
+
 				Log.create({macID: v["macAddress"], 
 					reason: v["historyLogReason"],
-					hierarchy: v["MapInfo"]["mapHierarchyString"],
 					mapX: v["MapCoordinate"]["x"],
 					mapY: v["MapCoordinate"]["y"],
 					firstLocatedTime: v["Statistics"]["firstLocatedTime"],
@@ -29,7 +31,9 @@ class LogHistory
 					username: v["userName"],
 					dot11status: v["dot11Status"],
 					isGuest: v["guestUser"],
-					floor: v["MapInfo"]["floorRefId"]
+					floor: v["MapInfo"]["floorRefId"],
+					client: @client,
+					location: Location.get_location(v["MapCoordinate"]["x"], v["MapCoordinate"]["y"], @client.id)
 					})
 			end
 		# LOOP BURADA BITECEK	
