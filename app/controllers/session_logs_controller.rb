@@ -2,9 +2,9 @@ class SessionLogsController < ApplicationController
 
 	def ocan
 
-		HardWorker.perform_async('bob', 5)
+		HardWorker.perform_async('bobcan', 15)
 		
-		render json: "ocan"
+		render json: "ocakkkn"
 	end
 
 end
