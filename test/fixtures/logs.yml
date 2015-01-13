@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  macID: MyString
+  mapX: 1.5
+  mapY: 1.5
+  hierarchy: MyString
+  floor: MyString
+  firstLocatedTime: 2015-01-13 10:41:06
+  lastLocatedTime: 2015-01-13 10:41:06
+  reason: MyString
+  ip: MyString
+  username: MyString
+  dot11status: MyString
+  isGuest: false
+
+two:
+  macID: MyString
+  mapX: 1.5
+  mapY: 1.5
+  hierarchy: MyString
+  floor: MyString
+  firstLocatedTime: 2015-01-13 10:41:06
+  lastLocatedTime: 2015-01-13 10:41:06
+  reason: MyString
+  ip: MyString
+  username: MyString
+  dot11status: MyString
+  isGuest: false

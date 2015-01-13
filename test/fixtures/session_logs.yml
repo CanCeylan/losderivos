@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  macID: MyString
+  logTime: 2015-01-13 10:50:50
+  client_id: 
+  duration: 
+
+two:
+  macID: MyString
+  logTime: 2015-01-13 10:50:50
+  client_id: 
+  duration: 

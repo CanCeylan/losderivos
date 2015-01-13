@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  logDate: 2015-01-13
+  client_id: 
+  potential: 1
+  conversion: 1
+  new: 1
+  repeat: 1
+  averageTime: 1
+  bounce: 1
+  weeklyRetention: 1.5
+  monthlyRetention: 1.5
+  biMonthlyRetention: 1.5
+
+two:
+  logDate: 2015-01-13
+  client_id: 
+  potential: 1
+  conversion: 1
+  new: 1
+  repeat: 1
+  averageTime: 1
+  bounce: 1
+  weeklyRetention: 1.5
+  monthlyRetention: 1.5
+  biMonthlyRetention: 1.5
