@@ -55,8 +55,8 @@ ActiveRecord::Schema.define(version: 20150113085823) do
     t.integer  "client_id",          limit: 4
     t.integer  "potential",          limit: 4
     t.integer  "conversion",         limit: 4
-    t.integer  "new",                limit: 4
-    t.integer  "repeat",             limit: 4
+    t.integer  "newCustomers",       limit: 4
+    t.integer  "repeatCustomers",    limit: 4
     t.integer  "averageTime",        limit: 4
     t.integer  "bounce",             limit: 4
     t.float    "weeklyRetention",    limit: 24

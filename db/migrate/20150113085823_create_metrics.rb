@@ -5,8 +5,8 @@ class CreateMetrics < ActiveRecord::Migration
       t.references :client, index: true
       t.integer :potential
       t.integer :conversion
-      t.integer :new
-      t.integer :repeat
+      t.integer :newCustomers
+      t.integer :repeatCustomers
       t.integer :averageTime
       t.integer :bounce
       t.float :weeklyRetention
