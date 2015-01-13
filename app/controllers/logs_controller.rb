@@ -15,7 +15,7 @@ class LogsController < ApplicationController
 		visitor_list = JSON.parse(response)["Locations"]["entries"]
 		#variables
 		visitor_list.each do |v|
-			Log.create({mac_id: v["macAddress"], 
+			Log.create({macID: v["macAddress"], 
 						reason: v["historyLogReason"],
 						hierarchy: v["MapInfo"]["mapHierarchyString"],
 						mapX: v["MapCoordinate"]["x"],
@@ -32,3 +32,16 @@ class LogsController < ApplicationController
 
 
 end
+
+    t.string   "macID",            limit: 255
+    t.float    "mapX",             limit: 24
+    t.float    "mapY",             limit: 24
+    t.string   "hierarchy",        limit: 255
+    t.string   "floor",            limit: 255
+    t.datetime "firstLocatedTime"
+    t.datetime "lastLocatedTime"
+    t.string   "reason",           limit: 255
+    t.string   "ip",               limit: 255
+    t.string   "username",         limit: 255
+    t.string   "dot11status",      limit: 255
+    t.boolean  "isGuest",          limit: 1
