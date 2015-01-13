@@ -9,7 +9,7 @@ class MetricsController < ApplicationController
 
 			logDate= Date.today
 			client_id=c.id
-			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("date(lastLocatedTime) = ? and isOutside = true",logDate)
+			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = true",client_id,logDate)
 			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("date(lastLocatedTime) = ? and isOutside = false",logDate)
 
 			Metric.create({ logDate: logDate,
