@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20150113085823) do
     t.string   "macID",            limit: 255
     t.float    "mapX",             limit: 24
     t.float    "mapY",             limit: 24
-    t.string   "hierarchy",        limit: 255
     t.string   "floor",            limit: 255
     t.datetime "firstLocatedTime"
     t.datetime "lastLocatedTime"
@@ -47,9 +46,14 @@ ActiveRecord::Schema.define(version: 20150113085823) do
     t.string   "username",         limit: 255
     t.string   "dot11status",      limit: 255
     t.boolean  "isGuest",          limit: 1
+    t.integer  "location_id",      limit: 4
+    t.integer  "client_id",        limit: 4
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
   end
+
+  add_index "logs", ["client_id"], name: "index_logs_on_client_id", using: :btree
+  add_index "logs", ["location_id"], name: "index_logs_on_location_id", using: :btree
 
   create_table "metrics", force: :cascade do |t|
     t.date     "logDate"

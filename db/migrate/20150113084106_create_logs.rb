@@ -4,7 +4,6 @@ class CreateLogs < ActiveRecord::Migration
       t.string :macID
       t.float :mapX
       t.float :mapY
-      t.string :hierarchy
       t.string :floor
       t.datetime :firstLocatedTime
       t.datetime :lastLocatedTime
@@ -13,6 +12,8 @@ class CreateLogs < ActiveRecord::Migration
       t.string :username
       t.string :dot11status
       t.boolean :isGuest
+      t.references :location, index: true
+      t.references :client, index: true
 
       t.timestamps null: false
     end
