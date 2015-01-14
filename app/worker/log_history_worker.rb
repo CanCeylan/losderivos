@@ -1,9 +1,9 @@
-class LogHistory
+class LogHistoryWorker
 
 	include Sidekiq::Worker
 
 	def perform(url, pageSize, page)
-	#url -> https://learning:learning@64.103.26.61/api/contextaware/v1/location/history/clients/00:00:2a:01:00:0f.json
+
 		resource = RestClient::Resource.new(
 			url,
 			:timeout => -1,
@@ -13,13 +13,20 @@ class LogHistory
 		totalPages =  JSON.parse(response)["Locations"]["totalPages"]
 		currentPage = JSON.parse(response)["Locations"]["currentPage"]
 
-		# BURAYA CMX LOG HISTORYDEN DONEN NEXT RESOURCE URI ALINACAK
-		# O URI LOOP OLARAK CAGILRACAK NEXT URI OLMAYANA KADAR.
+		if currentPage <= totalPages 
 			visitor_list = JSON.parse(response)["Locations"]["entries"]
+			logYazici(visitor_list)	
+			currentPage += 1
+			perform(url, pageSize, currentPage)
+		end
+	end
 
-			visitor_list.each do |v|
 
-				@client = Client.find_by_name(v["MapInfo"]["mapHierarchyString"]) # burada data gelince daha duzgun bi parse islemi yapilacak, su an yanlis calisiyor
+	def logYazici(visitor_list)
+		visitor_list.each do |v|
+
+				@client = Client.find_by_branch(v["MapInfo"]["mapHierarchyString"]) 
+				@location = Location.find_or_create_by({id: Location.get_location(v["MapCoordinate"]["x"], v["MapCoordinate"]["y"], @client.id)})
 
 				Log.create({macID: v["macAddress"], 
 					reason: v["historyLogReason"],
@@ -32,11 +39,11 @@ class LogHistory
 					dot11status: v["dot11Status"],
 					isGuest: v["guestUser"],
 					floor: v["MapInfo"]["floorRefId"],
-					client: @client.id,
-					location: Location.get_location(v["MapCoordinate"]["x"], v["MapCoordinate"]["y"], @client.id)
+					client: @client,
+					location: @location
 					})
 			end
-		# LOOP BURADA BITECEK	
 	end
+
 
 end
