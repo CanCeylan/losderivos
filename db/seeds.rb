@@ -7,15 +7,16 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-Client.create({name: "Zara", branch:"Istinye Park"})
-Client.create({name: "Zara", branch:"Kanyon"})
-Client.create({name: "Zara", branch:"Marmaris Marina"})
+Client.create({name: "Zara", branch:"DevNetCampus>DevNetBuilding>DevNetZone"})
+Client.create({name: "Zara", branch:"DevNetCampus>DevNetBuilding>DevNetZone2"})
 
-Location.create({client_id: 1, region: "Outside South", minX: -0.5, maxX: 190, minY: -0.5, maxY: 20, isOutside: true})
-Location.create({client_id: 1, region: "Outside West", minX: -0.5, maxX: 25, minY: -0.5, maxY: 105, isOutside: true})
-Location.create({client_id: 1, region: "Women", minX: 25, maxX: 120, minY: 60, maxY: 105, isOutside: false})
-Location.create({client_id: 1, region: "Men", minX: 120, maxX: 190, minY: 20, maxY: 60, isOutside: false})
-Location.create({client_id: 1, region: "All", minX: 25, maxX: 120, minY: 20, maxY: 60, isOutside: false})
-Location.create({client_id: 1, region: "Checkout", minX: 120, maxX: 190, minY: 60, maxY: 105, isOutside: false})
+aydi = Client.first.id
+
+Location.create({client_id: aydi, region: "Outside South", minX: -0.5, maxX: 190, minY: -0.5, maxY: 20, isOutside: true})
+Location.create({client_id: aydi, region: "Outside West", minX: -0.5, maxX: 25, minY: -0.5, maxY: 105, isOutside: true})
+Location.create({client_id: aydi, region: "Women", minX: 25, maxX: 120, minY: 60, maxY: 105, isOutside: false})
+Location.create({client_id: aydi, region: "Men", minX: 120, maxX: 190, minY: 20, maxY: 60, isOutside: false})
+Location.create({client_id: aydi, region: "All", minX: 25, maxX: 120, minY: 20, maxY: 60, isOutside: false})
+Location.create({client_id: aydi, region: "Checkout", minX: 120, maxX: 190, minY: 60, maxY: 105, isOutside: false})
 
 
