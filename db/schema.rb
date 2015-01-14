@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113085823) do
+ActiveRecord::Schema.define(version: 20150114160205) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 20150113085823) do
     t.boolean  "isGuest",          limit: 1
     t.integer  "location_id",      limit: 4
     t.integer  "client_id",        limit: 4
-    t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                   null: false
   end
 
   add_index "logs", ["client_id"], name: "index_logs_on_client_id", using: :btree
@@ -74,17 +74,22 @@ ActiveRecord::Schema.define(version: 20150113085823) do
   add_index "metrics", ["client_id"], name: "index_metrics_on_client_id", using: :btree
 
   create_table "session_logs", force: :cascade do |t|
-    t.string   "macID",      limit: 255
+    t.string   "macID",       limit: 255
     t.datetime "logTime"
-    t.integer  "client_id",  limit: 4
-    t.integer  "duration",   limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "client_id",   limit: 4
+    t.integer  "duration",    limit: 4,   default: 0
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
+    t.datetime "pointer"
+    t.boolean  "isClosed",    limit: 1
+    t.integer  "location_id", limit: 4
   end
 
   add_index "session_logs", ["client_id"], name: "index_session_logs_on_client_id", using: :btree
+  add_index "session_logs", ["location_id"], name: "index_session_logs_on_location_id", using: :btree
 
   add_foreign_key "locations", "clients"
   add_foreign_key "metrics", "clients"
   add_foreign_key "session_logs", "clients"
+  add_foreign_key "session_logs", "locations"
 end

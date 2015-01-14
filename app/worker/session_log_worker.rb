@@ -1,37 +1,51 @@
-class LogHistoryWorker
+class SessionLogWorker
 
 	include Sidekiq::Worker
 
-	def perform()
+	def perform(deyt)
 
-		#
-		@logs = Log.order(lastTime: :asc).first(5000)
+		# Sadece belirli zaman iersiinde gelen userlarin macidlerini cekmek gerekli
+		# location ile join edip sadece iceridekileri burada da filtreleyebiliriz?
+		@users = Log.select("DISTINCT(macID)").where("date(lastLocatedTime) = ?", deyt)
 
-		@logs.each do |l|
-			
-			pointer = l["lastTime"]		
-			session = SessionLog.where(macID: l["mac_id"]).last   
+		@users.each do |u| 
 
-			if session.nil? #new session starts
-				session = SessionLog.find_or_create_by({logTime: pointer, macID: l["mac_id"], pointer: pointer, isClosed: false})
-			else	
-				if session.pointer.present? #if session already started
-					difference = pointer - session.pointer
-					if difference <= 300
-						session.duration += difference
-						session.pointer = pointer
-					else # session ends
-						session.isClosed = true
-						SessionLog.create({logTime: pointer, macID: l["mac_id"], pointer: pointer})
+			@logs = Log.where("macID = ? and location_id != 0", u["macID"]).order(lastLocatedTime: :asc)
+
+			@logs.each do |l|
+
+				location = Location.find(l["location_id"])
+
+				if !location.isOutside
+					pointer = l["lastLocatedTime"]		
+					session = SessionLog.where(macID: l["macID"]).last   
+					if session.nil? #new session starts
+						session = SessionLog.create({logTime: pointer, 
+													macID: l["macID"], 
+													pointer: pointer, 
+													isClosed: false,
+													client_id: l["client_id"],
+													location_id: l["location_id"]})
+					else 			#if session already started	
+						if session.pointer.present? 
+							difference = pointer - session.pointer
+							if difference <= 300
+								session.duration += difference
+								session.pointer = pointer
+							else # session ends
+								session.isClosed = true
+								SessionLog.create({logTime: pointer, 
+													macID: l["macID"], 
+													pointer: pointer, 
+													isClosed: false,
+													client_id: l["client_id"],
+													location_id: l["location_id"]})
+							end
+							session.save
+						end
 					end
-					session.save
 				end
 			end
 		end
-
 	end
-
-
-
-
 end
