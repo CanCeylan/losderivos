@@ -10,16 +10,21 @@ class MetricsController < ApplicationController
 			logDate= Date.today
 			client_id=c.id
 			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = true",client_id,logDate)
-			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("date(lastLocatedTime) = ? and isOutside = false",logDate)
+			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = false",client_id,logDate)
+			newCustomers = Log.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(firstLocatedTime) >= date(lastLocatedTime)",client_id)
+			repeatCustomers = Log.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(firstLocatedTime) < date(lastLocatedTime)",client_id)
+			averageTime = SessionLog.select("SUM(duration)/COUNT(macID)").where("client_id = ? and date(logTime) = ? and isClosed = 1",client_id,logDate) 
+			bounce = SessionLog.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(logTime) = ? and duration < 60 and isClosed = 1",client_id,logDate) 
+
 
 			Metric.create({ logDate: logDate,
 				client_id: client_id,
-				potential: 1, potential,
-				conversion: 1, conversion,
-				newCustomers: 1, #newCustomers,
-				repeatCustomers: 1, #repeatCustomers,
-				averageTime: 1, #averageTime,
-				bounce: 1, #bounce,
+				potential: potential,
+				conversion: conversion,
+				newCustomers: newCustomers,
+				repeatCustomers: repeatCustomers,
+				averageTime: averageTime,
+				bounce: bounce,
 				weeklyRetention: 1.1, #weeklyRetention,
 				monthlyRetention: 1.1, #monthlyRetention,
 				biMonthlyRetention: 1.1 #biMonthlyRetention
