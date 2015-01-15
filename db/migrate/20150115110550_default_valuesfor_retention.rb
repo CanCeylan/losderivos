@@ -1,0 +1,25 @@
+class DefaultValuesforRetention < ActiveRecord::Migration
+  def change
+  	change_column_default(:retentions, :w1	,0)
+	change_column_default(:retentions, :w2	,0)
+	change_column_default(:retentions, :w3	,0)
+	change_column_default(:retentions, :w4	,0)
+	change_column_default(:retentions, :w5	,0)
+	change_column_default(:retentions, :w6	,0)
+	change_column_default(:retentions, :w7	,0)
+	change_column_default(:retentions, :w8	,0)
+	change_column_default(:retentions, :w9	,0)
+	change_column_default(:retentions, :w10	,0)
+	change_column_default(:retentions, :w11	,0)
+	change_column_default(:retentions, :w12	,0)
+	change_column_default(:retentions, :m4	,0)
+	change_column_default(:retentions, :m5	,0)
+	change_column_default(:retentions, :m6	,0)
+	change_column_default(:retentions, :m7	,0)
+	change_column_default(:retentions, :m8	,0)
+	change_column_default(:retentions, :m9	,0)
+	change_column_default(:retentions, :m10	,0)
+	change_column_default(:retentions, :m11	,0)
+	change_column_default(:retentions, :m12	,0)
+  end
+end
