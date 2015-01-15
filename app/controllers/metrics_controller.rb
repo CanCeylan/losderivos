@@ -9,7 +9,7 @@ class MetricsController < ApplicationController
 
 			logDate= Date.today
 			client_id=c.id
-			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = true",client_id,logDate)
+			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = 1",client_id,logDate)
 			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = false",client_id,logDate)
 			newCustomers = Log.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(firstLocatedTime) >= date(lastLocatedTime)",client_id)
 			repeatCustomers = Log.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(firstLocatedTime) < date(lastLocatedTime)",client_id)

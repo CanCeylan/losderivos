@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 20150114160205) do
     t.boolean  "isGuest",          limit: 1
     t.integer  "location_id",      limit: 4
     t.integer  "client_id",        limit: 4
-    t.datetime "updated_at",                   null: false
     t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "logs", ["client_id"], name: "index_logs_on_client_id", using: :btree
