@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114160205) do
+ActiveRecord::Schema.define(version: 20150115110550) do
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -73,6 +73,37 @@ ActiveRecord::Schema.define(version: 20150114160205) do
 
   add_index "metrics", ["client_id"], name: "index_metrics_on_client_id", using: :btree
 
+  create_table "retentions", force: :cascade do |t|
+    t.string   "macID",            limit: 255
+    t.integer  "client_id",        limit: 4
+    t.datetime "firstLocatedTime"
+    t.boolean  "w1",               limit: 1,   default: false
+    t.boolean  "w2",               limit: 1,   default: false
+    t.boolean  "w3",               limit: 1,   default: false
+    t.boolean  "w4",               limit: 1,   default: false
+    t.boolean  "w5",               limit: 1,   default: false
+    t.boolean  "w6",               limit: 1,   default: false
+    t.boolean  "w7",               limit: 1,   default: false
+    t.boolean  "w8",               limit: 1,   default: false
+    t.boolean  "w9",               limit: 1,   default: false
+    t.boolean  "w10",              limit: 1,   default: false
+    t.boolean  "w11",              limit: 1,   default: false
+    t.boolean  "w12",              limit: 1,   default: false
+    t.boolean  "m4",               limit: 1,   default: false
+    t.boolean  "m5",               limit: 1,   default: false
+    t.boolean  "m6",               limit: 1,   default: false
+    t.boolean  "m7",               limit: 1,   default: false
+    t.boolean  "m8",               limit: 1,   default: false
+    t.boolean  "m9",               limit: 1,   default: false
+    t.boolean  "m10",              limit: 1,   default: false
+    t.boolean  "m11",              limit: 1,   default: false
+    t.boolean  "m12",              limit: 1,   default: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+  end
+
+  add_index "retentions", ["client_id"], name: "index_retentions_on_client_id", using: :btree
+
   create_table "session_logs", force: :cascade do |t|
     t.string   "macID",       limit: 255
     t.datetime "logTime"
@@ -90,6 +121,7 @@ ActiveRecord::Schema.define(version: 20150114160205) do
 
   add_foreign_key "locations", "clients"
   add_foreign_key "metrics", "clients"
+  add_foreign_key "retentions", "clients"
   add_foreign_key "session_logs", "clients"
   add_foreign_key "session_logs", "locations"
 end

@@ -1,7 +1,7 @@
 class SessionLogWorker
 
 	include Sidekiq::Worker
-
+	
 	def perform(deyt)
 
 		# Sadece belirli zaman iersiinde gelen userlarin macidlerini cekmek gerekli
