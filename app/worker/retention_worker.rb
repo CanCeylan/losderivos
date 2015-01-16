@@ -14,7 +14,7 @@ class RetentionWorker
 
 			case u["diff"]
 
-			when 1...7
+			when 1..7
 				retention.w1 = 1
 			when 8..14
 				retention.w2 = 1
