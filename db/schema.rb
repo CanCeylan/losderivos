@@ -23,16 +23,6 @@ ActiveRecord::Schema.define(version: 20150116151531) do
   add_index "campaign_clients", ["campaign_id"], name: "index_campaign_clients_on_campaign_id", using: :btree
   add_index "campaign_clients", ["client_id"], name: "index_campaign_clients_on_client_id", using: :btree
 
-  create_table "campaign_locations", force: :cascade do |t|
-    t.integer  "campaign_id", limit: 4
-    t.integer  "location_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "campaign_locations", ["campaign_id"], name: "index_campaign_locations_on_campaign_id", using: :btree
-  add_index "campaign_locations", ["location_id"], name: "index_campaign_locations_on_location_id", using: :btree
-
   create_table "campaigns", force: :cascade do |t|
     t.string   "name",       limit: 255
     t.string   "company",    limit: 255
@@ -151,8 +141,6 @@ ActiveRecord::Schema.define(version: 20150116151531) do
 
   add_foreign_key "campaign_clients", "campaigns"
   add_foreign_key "campaign_clients", "clients"
-  add_foreign_key "campaign_locations", "campaigns"
-  add_foreign_key "campaign_locations", "locations"
   add_foreign_key "locations", "clients"
   add_foreign_key "metrics", "clients"
   add_foreign_key "retentions", "clients"
