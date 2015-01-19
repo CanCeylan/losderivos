@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   get 'retention/month' => 'api/v1/retention#monthlyRetention'
   get 'retention' => 'api/v1/retention#facade'
 
+  post 'campaigns/create' => 'api/v1/campaign_client#create'
+  post 'campaign/create' => 'api/v1/campaign#create'
+
   #  get 'logs/update' => 'logs#add_log'
 
   # Example of regular route:
