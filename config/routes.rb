@@ -5,13 +5,11 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   #  root 'session_logs#ocan'
 
-  get 'retention/week' => 'api/v1/retention#weeklyRetention'
-  get 'retention/month' => 'api/v1/retention#monthlyRetention'
-  get 'retention' => 'api/v1/retention#facade'
-
   namespace :api do
     namespace :v1 do
-      resources :campaign
+      get 'campaign/:company' => 'campaign#show'
+      get 'retention/:client_id/month' => 'retention#monthlyRetention'
+      get 'retention/:client_id/week' => 'retention#weekRetention'
     end
   end
 
