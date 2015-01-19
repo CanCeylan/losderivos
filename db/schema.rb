@@ -11,7 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150115110550) do
+ActiveRecord::Schema.define(version: 20150116151531) do
+
+  create_table "campaign_clients", force: :cascade do |t|
+    t.integer  "campaign_id", limit: 4
+    t.integer  "client_id",   limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "campaign_clients", ["campaign_id"], name: "index_campaign_clients_on_campaign_id", using: :btree
+  add_index "campaign_clients", ["client_id"], name: "index_campaign_clients_on_client_id", using: :btree
+
+  create_table "campaigns", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.string   "company",    limit: 255
+    t.datetime "start"
+    t.datetime "end"
+    t.boolean  "hasAll",     limit: 1
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "clients", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -119,6 +139,8 @@ ActiveRecord::Schema.define(version: 20150115110550) do
   add_index "session_logs", ["client_id"], name: "index_session_logs_on_client_id", using: :btree
   add_index "session_logs", ["location_id"], name: "index_session_logs_on_location_id", using: :btree
 
+  add_foreign_key "campaign_clients", "campaigns"
+  add_foreign_key "campaign_clients", "clients"
   add_foreign_key "locations", "clients"
   add_foreign_key "metrics", "clients"
   add_foreign_key "retentions", "clients"

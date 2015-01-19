@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  company: MyString
+  start: 2015-01-16 17:11:59
+  end: 2015-01-16 17:11:59
+  hasAll: false
+
+two:
+  name: MyString
+  company: MyString
+  start: 2015-01-16 17:11:59
+  end: 2015-01-16 17:11:59
+  hasAll: false
