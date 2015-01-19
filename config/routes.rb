@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   #  root 'session_logs#ocan'
 
   get 'retention/week' => 'api/v1/retention#weeklyRetention'
+  get 'retention/month' => 'api/v1/retention#monthlyRetention'
 
   #  get 'logs/update' => 'logs#add_log'
 
