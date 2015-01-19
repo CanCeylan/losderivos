@@ -97,29 +97,29 @@ ActiveRecord::Schema.define(version: 20150116151531) do
     t.string   "macID",            limit: 255
     t.integer  "client_id",        limit: 4
     t.datetime "firstLocatedTime"
-    t.boolean  "w1",               limit: 1,   default: false
-    t.boolean  "w2",               limit: 1,   default: false
-    t.boolean  "w3",               limit: 1,   default: false
-    t.boolean  "w4",               limit: 1,   default: false
-    t.boolean  "w5",               limit: 1,   default: false
-    t.boolean  "w6",               limit: 1,   default: false
-    t.boolean  "w7",               limit: 1,   default: false
-    t.boolean  "w8",               limit: 1,   default: false
-    t.boolean  "w9",               limit: 1,   default: false
-    t.boolean  "w10",              limit: 1,   default: false
-    t.boolean  "w11",              limit: 1,   default: false
-    t.boolean  "w12",              limit: 1,   default: false
-    t.boolean  "m4",               limit: 1,   default: false
-    t.boolean  "m5",               limit: 1,   default: false
-    t.boolean  "m6",               limit: 1,   default: false
-    t.boolean  "m7",               limit: 1,   default: false
-    t.boolean  "m8",               limit: 1,   default: false
-    t.boolean  "m9",               limit: 1,   default: false
-    t.boolean  "m10",              limit: 1,   default: false
-    t.boolean  "m11",              limit: 1,   default: false
-    t.boolean  "m12",              limit: 1,   default: false
-    t.datetime "created_at",                                   null: false
-    t.datetime "updated_at",                                   null: false
+    t.integer  "w1",               limit: 4,   default: 0
+    t.integer  "w2",               limit: 4,   default: 0
+    t.integer  "w3",               limit: 4,   default: 0
+    t.integer  "w4",               limit: 4,   default: 0
+    t.integer  "w5",               limit: 4,   default: 0
+    t.integer  "w6",               limit: 4,   default: 0
+    t.integer  "w7",               limit: 4,   default: 0
+    t.integer  "w8",               limit: 4,   default: 0
+    t.integer  "w9",               limit: 4,   default: 0
+    t.integer  "w10",              limit: 4,   default: 0
+    t.integer  "w11",              limit: 4,   default: 0
+    t.integer  "w12",              limit: 4,   default: 0
+    t.integer  "m4",               limit: 4,   default: 0
+    t.integer  "m5",               limit: 4,   default: 0
+    t.integer  "m6",               limit: 4,   default: 0
+    t.integer  "m7",               limit: 4,   default: 0
+    t.integer  "m8",               limit: 4,   default: 0
+    t.integer  "m9",               limit: 4,   default: 0
+    t.integer  "m10",              limit: 4,   default: 0
+    t.integer  "m11",              limit: 4,   default: 0
+    t.integer  "m12",              limit: 4,   default: 0
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
   end
 
   add_index "retentions", ["client_id"], name: "index_retentions_on_client_id", using: :btree

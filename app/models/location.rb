@@ -11,6 +11,6 @@ class Location < ActiveRecord::Base
 				return zone.id
 			end	
 		end
-		0
+		1
 	end
 end

@@ -26,7 +26,7 @@ class LogHistoryWorker
 		visitor_list.each do |v|
 
 				@client = Client.find_by_branch(v["MapInfo"]["mapHierarchyString"]) 
-				@location = Location.find({id: Location.get_location(v["MapCoordinate"]["x"], v["MapCoordinate"]["y"], @client.id)})
+				@location = @client.locations.find(Location.get_location(v["MapCoordinate"]["x"], v["MapCoordinate"]["y"], @client.id))
 
 				if @location.nil?
 					Location.find_by_region("Kaatane")

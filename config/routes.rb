@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   #  root 'session_logs#ocan'
 
+  get 'retention/week' => 'api/v1/retention#weeklyRetention'
+
   #  get 'logs/update' => 'logs#add_log'
 
   # Example of regular route:
