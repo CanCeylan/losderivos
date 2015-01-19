@@ -4,16 +4,16 @@ class SessionLogWorker
 	
 	def perform
 
-		date = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
+		date = SessionLog.select("logTime").order("logTime DESC").limit(1)
 		# Sadece belirli zaman iersiinde gelen userlarin mac'idlerini cekmek gerekli
 		# location ile join edip sadece iceridekileri burada da filtreleyebiliriz?
-		@users = Log.select("DISTINCT(macID)").where("date(lastLocatedTime) = ?", date)
+		@users = Log.select("DISTINCT(macID)").where("lastLocatedTime > ?", date)
 
 		#burada bir da gunu gecmis olan insanlarin sessionlarini closed a getirmeliyiz!
 
 		@users.each do |u| 
 
-			@logs = Log.where("macID = ? and location_id != 0 and date(lastLocatedTime) = ?", u["macID"], date).order(lastLocatedTime: :asc)
+			@logs = Log.where("macID = ? and location_id != 0 and lastLocatedTime > ?", u["macID"], date).order(lastLocatedTime: :asc)
 
 			@logs.each do |l|
 
@@ -30,7 +30,7 @@ class SessionLogWorker
 													client_id: l["client_id"],
 													location_id: l["location_id"]})
 					else 			#if session already started	
-						if session.pointer.present? 
+						if session.pointer.present? && session.pointer < pointer
 							difference = pointer - session.pointer
 							if difference <= 300
 								session.duration += difference
