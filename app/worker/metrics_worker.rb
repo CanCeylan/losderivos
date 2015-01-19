@@ -2,7 +2,7 @@ class MetricsWorker
 
 	include Sidekiq::Worker
 
-	def perform(deyt)
+	def perform
 
 		logDate = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
 
