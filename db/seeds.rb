@@ -12,6 +12,8 @@ Client.create({name: "Zara", branch:"DevNetCampus>DevNetBuilding>DevNetZone2"})
 
 aydi = Client.first.id
 
+
+Location.create({client_id: aydi, region: "Kaatane", minX: -0.50, maxX: -0.49, minY: -0.50, maxY: -0.49, isOutside: true})
 Location.create({client_id: aydi, region: "Outside South", minX: -0.5, maxX: 190, minY: -0.5, maxY: 20, isOutside: true})
 Location.create({client_id: aydi, region: "Outside West", minX: -0.5, maxX: 25, minY: -0.5, maxY: 105, isOutside: true})
 Location.create({client_id: aydi, region: "Women", minX: 25, maxX: 120, minY: 60, maxY: 105, isOutside: false})
