@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   get 'retention/week' => 'api/v1/retention#weeklyRetention'
   get 'retention/month' => 'api/v1/retention#monthlyRetention'
+  get 'retention' => 'api/v1/retention#facade'
 
   #  get 'logs/update' => 'logs#add_log'
 
