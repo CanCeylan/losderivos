@@ -1,40 +1,30 @@
 class MetricsController < ApplicationController
 
-	def writeMetrics
+	respond_to :json
+	
+	def getClientMetrics
 
+	render json: Metric.where("client_id = ? and logDate between ? and ?", params[:id], params[:start], params[:end])
 
-		client_list = Client.all
+	end
 
-		client_list.each do |c|
+	def getClientDensity
 
-			logDate= Date.today
-			client_id=c.id
-			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = 1",client_id,logDate)
-			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID))").where("client_id = ? and date(lastLocatedTime) = ? and isOutside = false",client_id,logDate)
-			newCustomers = Log.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(firstLocatedTime) >= date(lastLocatedTime)",client_id)
-			repeatCustomers = Log.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(firstLocatedTime) < date(lastLocatedTime)",client_id)
-			averageTime = SessionLog.select("SUM(duration)/COUNT(macID)").where("client_id = ? and date(logTime) = ? and isClosed = 1",client_id,logDate) 
-			bounce = SessionLog.select("COUNT(DISTINCT(macID))").where("client_id = ? and date(logTime) = ? and duration < 60 and isClosed = 1",client_id,logDate) 
+	LogDate =Date.yesterday
+	
 
+	render json: 
 
-			Metric.create({ logDate: logDate,
-				client_id: client_id,
-				potential: potential,
-				conversion: conversion,
-				newCustomers: newCustomers,
-				repeatCustomers: repeatCustomers,
-				averageTime: averageTime,
-				bounce: bounce,
-				weeklyRetention: 1.1, #weeklyRetention,
-				monthlyRetention: 1.1, #monthlyRetention,
-				biMonthlyRetention: 1.1 #biMonthlyRetention
-				})
-
-		end
+	Metric.where("client_id = ? and logDate = '#{logDate}'", params[:id])
 
 	end
 
 
+#conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID)) as conversion").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 0",client_id,logDate)
+#newCustomers = Log.select("COUNT(DISTINCT(macID)) as newCustomers").where("client_id = ? and date(firstLocatedTime) >= date(lastLocatedTime)",client_id)
+#repeatCustomers = Log.select("COUNT(DISTINCT(macID)) as repeatCustomers").where("client_id = ? and date(firstLocatedTime) < date(lastLocatedTime)",client_id)
+			
+	
 end
 
 

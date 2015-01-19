@@ -2,7 +2,7 @@ class MetricsWorker
 
 	include Sidekiq::Worker
 
-	def perform()
+	def perform(logDate)
 		puts "Basliyoruum"
 
 
@@ -10,7 +10,6 @@ class MetricsWorker
 
 		client_list.each do |c|
 
-			logDate= Date.today
 			client_id=c["id"]
 			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID)) as potential").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 1",client_id,logDate)
 			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID)) as conversion").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 0",client_id,logDate)
