@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   #  root 'session_logs#ocan'
 
-   get 'metric/list' => 'metrics#getClientMetrics'
+   get 'overview' => 'api/v1/overview#getOverview'
 
   #  get 'logs/update' => 'logs#add_log'
 

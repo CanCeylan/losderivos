@@ -1,82 +1,39 @@
+require 'metric_calculator'
 class Api::V1::OverviewController < ApplicationController
+	include MetricCalculator
 	respond_to :json
 
-	def getOverview
+	def getOverview()
 
-	
+		client_id = params[:client_id].to_i
+		logDate = params[:logDate].to_date
+		storefront_potential = getPotential(client_id,logDate).first["potential"].to_i
+		storefront_conversion = getConversion(client_id,logDate).first["conversion"].to_i
+		new_customers = getNewCustomers(client_id,logDate).first["newCustomers"].to_i
+		repeat_customers = getRepeatCustomers(client_id,logDate).first["repeatCustomers"].to_i
+		average_shop_time = getAverageTime(client_id,logDate).first["averageTime"].to_i
 
+		hourly_traffic = Location.joins(:logs).select("HOUR(logs.lastlocatedTime) as time,
+			COUNT(DISTINCT CASE WHEN date(logs.firstLocatedTime) >= date(logs.lastLocatedTime) THEN logs.macID ELSE NULL END) as newcustomer,
+			COUNT(DISTINCT CASE WHEN date(logs.firstLocatedTime) < date(logs.lastLocatedTime) THEN logs.macID ELSE NULL END) as repeatcustomer").where("logs.client_id = ? 
+			and date(logs.lastLocatedTime) = ? and isOutside = 0",client_id,logDate).group("HOUR(logs.lastlocatedTime)")
+
+		density =[]
+		hourly_traffic.each do |h|
+		density.push(h)
+		end
+
+		tempHash = {
+			"client_id"=>client_id,
+			"storefront_potential"=>storefront_potential,
+			"storefront_conversion"=>storefront_conversion,
+			"new_customers"=>new_customers,
+			"repeat_customers"=>repeat_customers,
+			"average_shop_time"=>average_shop_time
+			}
+		tempHash["hourly_traffic"] =density
+
+		render json: tempHash
 	end
 
 end
-
-	# respond_to :json
-	
-	# def getClientMetrics
-
-	# render json: Metric.where("client_id = ? and logDate between ? and ?", params[:id], params[:start], params[:end])
-
-	# end
-
-# puts JSON.pretty_generate([1, 2, {"a"=>3.141}, false, true, nil, 4..10])
-# [
-#   1,
-#   2,
-#   {
-#     "a": 3.141
-#   },
-#   false,
-#   true,
-#   null,
-#   {
-#     "json_class": "Range",
-#     "data": [
-#       4,
-#       10,
-#       false
-#     ]
-#   }
-# ]
-
-# {
-#   "client_id": "4",
-#   "storefront_potential": "23",
-#   "storefront_conversion": ".45",
-#   "new_customers": "34",
-#   "repeat_customers": "22",
-#   "average_shop_time": "14",
-#   "hourly_traffic": [
-#     {
-#       "time": "9",
-#       "new": "2",
-#       "repeat": "1"
-#     },
-#     {
-#       "time": "10",
-#       "new": "6",
-#       "repeat": "9"
-#     },
-#     {
-#       "time": "11",
-#       "new": "10",
-#       "repeat": "15"
-#     },
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     null,
-#     {
-#       "time": "16",
-#       "new": "59",
-#       "repeat": "35"
-#     }
-#   ]
-# }
