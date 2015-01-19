@@ -8,11 +8,8 @@ class Api::V1::RetentionController < ApplicationController
 		frame = params[:frame].to_i
 
 		if frame == 1  # localhost:3000/retention?client_id=1&date="2015-01-06"&week=1
-			puts "weekly deyim"
-			puts params[:frame]
 			result["retention"] = weeklyRetention(params[:client_id], params[:date].to_date)		
 		elsif frame == 0
-			puts "burdayim baciii"
 			result["retention"] = monthlyRetention(params[:client_id], params[:date].to_date)		
 		end
 

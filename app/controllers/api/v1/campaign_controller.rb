@@ -4,6 +4,10 @@ class Api::V1::CampaignController < ApplicationController
 		@campaign = Campaign.new
 	end
 
+	def show
+		render json: Client.where(name: params[:company].to_s).to_json
+	end
+
 	def create
 		hasAll = params[:hasAll].to_i
 
@@ -31,4 +35,3 @@ class Api::V1::CampaignController < ApplicationController
 		render json: @campaign
 	end
 end
-
