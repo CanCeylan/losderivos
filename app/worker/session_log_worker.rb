@@ -2,15 +2,18 @@ class SessionLogWorker
 
 	include Sidekiq::Worker
 	
-	def perform(deyt)
+	def perform
 
-		# Sadece belirli zaman iersiinde gelen userlarin macidlerini cekmek gerekli
+		date = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
+		# Sadece belirli zaman iersiinde gelen userlarin mac'idlerini cekmek gerekli
 		# location ile join edip sadece iceridekileri burada da filtreleyebiliriz?
-		@users = Log.select("DISTINCT(macID)").where("date(lastLocatedTime) = ?", deyt)
+		@users = Log.select("DISTINCT(macID)").where("date(lastLocatedTime) = ?", date)
+
+		#burada bir da gunu gecmis olan insanlarin sessionlarini closed a getirmeliyiz!
 
 		@users.each do |u| 
 
-			@logs = Log.where("macID = ? and location_id != 0", u["macID"]).order(lastLocatedTime: :asc)
+			@logs = Log.where("macID = ? and location_id != 0 and date(lastLocatedTime) = ?", u["macID"], date).order(lastLocatedTime: :asc)
 
 			@logs.each do |l|
 

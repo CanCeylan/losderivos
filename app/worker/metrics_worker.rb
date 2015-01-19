@@ -4,11 +4,12 @@ class MetricsWorker
 
 	def perform(deyt)
 
+		logDate = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
+
 		client_list = Client.select(:id).distinct
 
 		client_list.each do |c|
 
-			logDate = deyt
 			client_id = c["id"]
 			potential = Location.joins(:logs).select("COUNT(DISTINCT(macID)) as potential").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 1",client_id,logDate)
 			conversion = Location.joins(:logs).select("COUNT(DISTINCT(macID)) as conversion").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 0",client_id,logDate)

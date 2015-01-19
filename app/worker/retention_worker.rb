@@ -2,10 +2,12 @@ class RetentionWorker
 
 	include Sidekiq::Worker
 	
-	def perform(deyt)
+	def perform
+
+		date = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
 
 		@users = Log.select("macID, client_id, firstLocatedTime, DATE(lastLocatedTime) - DATE(firstLocatedTime) as diff")
-					.where("date(lastLocatedTime) = ?", deyt)
+					.where("date(lastLocatedTime) = ?", date)
 					.group("macID, client_id, DATE(lastLocatedTime)")
 
 		@users.each do |u| 
