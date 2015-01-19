@@ -10,6 +10,7 @@ class Api::V1::CampaignController < ApplicationController
 
 	def create
 		hasAll = params[:hasAll].to_i
+		clients = Array(eval(params[:clients]))
 
 		@campaign = Campaign.new(name: params[:name],
 							 	 company: params[:company],
@@ -22,15 +23,11 @@ class Api::V1::CampaignController < ApplicationController
 
 		if hasAll == 1
 			clients = Client.where(name: params[:company].to_s)
-
-			clients.each do |c|
-				CampaignClient.create({client_id: c.id, 
-									   campaign_id: @campaign.id})
-			end		
-		else
-			CampaignClient.create({client_id: params[:client_id], 
-								   campaign_id: @campaign.id})
 		end
+
+		clients.each do |c|
+				CampaignClient.create({client_id: c, campaign_id: @campaign.id})
+		end		
 
 		render json: @campaign
 	end

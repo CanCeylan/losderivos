@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       get 'campaign/:company' => 'campaign#show'
       get 'retention/:client_id/month' => 'retention#monthlyRetention'
       get 'retention/:client_id/week' => 'retention#weekRetention'
+
+      post 'campaign/:new' => 'campaign#create'
     end
   end
 
