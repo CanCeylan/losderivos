@@ -20,4 +20,8 @@ module MetricCalculator
 		SessionLog.select("SUM(duration)/COUNT(macID) as averageTime").where("client_id = ? and date(pointer) = ? and isClosed = 1",client_id,logDate) 
 	end
 
+	def getBounce(client_id,logDate)
+		SessionLog.select("COUNT(macID) as bounce").where("client_id = ? and date(pointer) = ? and duration < 60 and isClosed = 1",client_id,logDate)
+	end
+
 end

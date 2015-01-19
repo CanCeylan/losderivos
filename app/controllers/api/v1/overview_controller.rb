@@ -6,7 +6,7 @@ class Api::V1::OverviewController < ApplicationController
 	def getOverview()
 
 		client_id = params[:client_id].to_i
-		logDate = params[:logDate].to_date
+		logDate = params[:date].to_date
 		storefront_potential = getPotential(client_id,logDate).first["potential"].to_i
 		storefront_conversion = getConversion(client_id,logDate).first["conversion"].to_i
 		new_customers = getNewCustomers(client_id,logDate).first["newCustomers"].to_i

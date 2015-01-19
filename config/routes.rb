@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   #  root 'session_logs#ocan'
 
    get 'overview' => 'api/v1/overview#getOverview'
+   get 'visit' => 'api/v1/visit#getVisit'
 
   #  get 'logs/update' => 'logs#add_log'
 
