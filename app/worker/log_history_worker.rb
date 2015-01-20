@@ -4,11 +4,20 @@ class LogHistoryWorker
 
 	def perform(url, pageSize, page)
 
+		after = Log.select(:lastLocatedTime).order("lastLocatedTime DESC").limit(1)
+
+		if after.nil?
+			after = Time.now-10.day
+		end
+
 		resource = RestClient::Resource.new(
 			url,
 			:timeout => -1,
 			:open_timeout => -1)
-		response = resource.get  :params => {sortBy: "lastLocatedTime:desc", pageSize: pageSize, page: page}
+		response = resource.get  :params => {sortBy: "lastLocatedTime:desc", 
+											 pageSize: pageSize, 
+											 page: page,
+											 locatedAfterTime: after}
 
 		totalPages =  JSON.parse(response)["Locations"]["totalPages"]
 		currentPage = JSON.parse(response)["Locations"]["currentPage"]

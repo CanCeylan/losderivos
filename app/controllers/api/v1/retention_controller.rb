@@ -1,51 +1,49 @@
 class Api::V1::RetentionController < ApplicationController
 
-	def facade
-
-		result = {}
-
-		result["client_id"] = params[:client_id].to_i
-		frame = params[:frame].to_i
-
-		if frame == 1  # localhost:3000/retention?client_id=1&date="2015-01-06"&week=1
-			puts "weekly deyim"
-			puts params[:frame]
-			result["retention"] = weeklyRetention(params[:client_id], params[:date].to_date)		
-		elsif frame == 0
-			puts "burdayim baciii"
-			result["retention"] = monthlyRetention(params[:client_id], params[:date].to_date)		
-		end
-
-		render json: result
-	end
-
 	# buradaki methodlarda su an sadece week ve month karsilastiriliyor, 
 	# ama bu data 1 yilliktan daha fazla data oldugunda where statement degistirilmeli
 
-	def weeklyRetention(client, date)
+	def weeklyRetention
+
+		result = {}
+		weekly = []
+		client = params[:client_id].to_i
+		date = params[:date].to_date
+
+		result["client_id"] = client
 
 		frame = 12.times.map {|i| (date - (i+1).week).end_of_week}
-		weekly = []
-
 		frame.each do |f|
 			weekly.push(calculateWeeklyRetention(client, f))
 		end
 
-		return weekly
+		result["retention"] = weekly
+
+		render json: result
 	end
 
 
-	def monthlyRetention(client, date)
+	def monthlyRetention
+
+		result = {}
+		monthly = []
+		client = params[:client_id].to_i
+		date = params[:date].to_date
+
+		result["client_id"] = client
 		
 		frame = 12.times.map {|i| (date - (i+1).month).end_of_month}
-		monthly = []
-
 		frame.each do |f|
 			monthly.push(calculateMonthlyRetention(client, f))
 		end
+		
+		result["retention"] = monthly
 
-		return monthly
+		render json: result
 	end
+
+
+	private
 
 	def calculateMonthlyRetention(client, date)
 		monthly = Retention.select("DATE(firstLocatedTime) as date,

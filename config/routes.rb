@@ -6,15 +6,23 @@ Rails.application.routes.draw do
   #  root 'session_logs#ocan'
 
 
+
   get 'overview' => 'api/v1/overview#getOverview'
   get 'visit' => 'api/v1/visit#getVisit'
 
-  get 'retention/week' => 'api/v1/retention#weeklyRetention'
-  get 'retention/month' => 'api/v1/retention#monthlyRetention'
-  get 'retention' => 'api/v1/retention#facade'
+  namespace :api do
+    namespace :v1 do
+      get 'campaign/:company' => 'campaign#show'
+      get 'retention/:client_id/month' => 'retention#monthlyRetention'
+      get 'retention/:client_id/week' => 'retention#weekRetention'
 
-  post 'campaigns/create' => 'api/v1/campaign_client#create'
-  post 'campaign/create' => 'api/v1/campaign#create'
+      post 'campaign/marketing/new' => 'campaign#create'
+      post 'campaign/display/new' => 'campaign#create'
+    end
+  end
+
+#  post 'campaigns/create' => 'api/v1/campaign_client#create'
+#  post 'campaign/create' => 'api/v1/campaign#create'
 
 
   #  get 'logs/update' => 'logs#add_log'

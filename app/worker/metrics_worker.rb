@@ -2,17 +2,17 @@ class MetricsWorker
 
 	include Sidekiq::Worker
 
-	def perform(deyt)
+	def perform
 
-		logDate = deyt
+		logDate = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
+
 		client_list = Client.select(:id).distinct
 
 		client_list.each do |c|
 
-
-			client_id=c["id"]
-			potential= Location.joins(:logs).select("COUNT(DISTINCT(macID)) as potential").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 1",client_id,logDate)
-			conversion= Location.joins(:logs).select("COUNT(DISTINCT(macID)) as conversion").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 0",client_id,logDate)
+			client_id = c["id"]
+			potential = Location.joins(:logs).select("COUNT(DISTINCT(macID)) as potential").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 1",client_id,logDate)
+			conversion = Location.joins(:logs).select("COUNT(DISTINCT(macID)) as conversion").where("logs.client_id = ? and date(lastLocatedTime) = ? and isOutside = 0",client_id,logDate)
 
 			newCustomers = Log.select("COUNT(DISTINCT(macID)) as newCustomers").where("client_id = ? and date(lastLocatedTime) = ? and date(firstLocatedTime) >= date(lastLocatedTime)",client_id,logDate)
 			repeatCustomers = Log.select("COUNT(DISTINCT(macID)) as repeatCustomers").where("client_id = ? and date(lastLocatedTime) = ? and date(firstLocatedTime) < date(lastLocatedTime)",client_id,logDate)
