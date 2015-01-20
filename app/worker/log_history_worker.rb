@@ -16,8 +16,7 @@ class LogHistoryWorker
 			:open_timeout => -1)
 		response = resource.get  :params => {sortBy: "lastLocatedTime:desc", 
 											 pageSize: pageSize, 
-											 page: page,
-											 locatedAfterTime: after}
+											 page: page}
 
 		totalPages =  JSON.parse(response)["Locations"]["totalPages"]
 		currentPage = JSON.parse(response)["Locations"]["currentPage"]

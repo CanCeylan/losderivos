@@ -6,6 +6,10 @@ class MetricsWorker
 
 		logDate = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
 
+		if logDate.nil?
+			logDate = Time.now-10.day
+		end
+
 		client_list = Client.select(:id).distinct
 
 		client_list.each do |c|

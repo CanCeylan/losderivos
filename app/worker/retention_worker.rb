@@ -6,6 +6,10 @@ class RetentionWorker
 
 		date = Log.select("DATE(lastLocatedTime)").order("lastLocatedTime DESC").limit(1)
 
+		if date.nil?
+			date = Time.now-10.day
+		end
+
 		@users = Log.select("macID, client_id, firstLocatedTime, DATE(lastLocatedTime) - DATE(firstLocatedTime) as diff")
 					.where("date(lastLocatedTime) = ?", date)
 					.group("macID, client_id, DATE(lastLocatedTime)")

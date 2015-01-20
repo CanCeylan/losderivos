@@ -7,6 +7,10 @@ class SessionLogWorker
 		date = SessionLog.select("logTime").order("logTime DESC").limit(1)
 		# Sadece belirli zaman iersiinde gelen userlarin mac'idlerini cekmek gerekli
 		# location ile join edip sadece iceridekileri burada da filtreleyebiliriz?
+		if date.count == 0
+			date = Time.now-10.day
+		end
+
 		@users = Log.select("DISTINCT(macID)").where("lastLocatedTime > ?", date)
 
 		#burada bir da gunu gecmis olan insanlarin sessionlarini closed a getirmeliyiz!
