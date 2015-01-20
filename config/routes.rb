@@ -5,8 +5,17 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   #  root 'session_logs#ocan'
 
-   get 'overview' => 'api/v1/overview#getOverview'
-   get 'visit' => 'api/v1/visit#getVisit'
+
+  get 'overview' => 'api/v1/overview#getOverview'
+  get 'visit' => 'api/v1/visit#getVisit'
+
+  get 'retention/week' => 'api/v1/retention#weeklyRetention'
+  get 'retention/month' => 'api/v1/retention#monthlyRetention'
+  get 'retention' => 'api/v1/retention#facade'
+
+  post 'campaigns/create' => 'api/v1/campaign_client#create'
+  post 'campaign/create' => 'api/v1/campaign#create'
+
 
   #  get 'logs/update' => 'logs#add_log'
 

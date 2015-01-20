@@ -3,8 +3,8 @@ class CreateCampaigns < ActiveRecord::Migration
     create_table :campaigns do |t|
       t.string :name
       t.string :company
-      t.datetime :start
-      t.datetime :end
+      t.datetime :startDate
+      t.datetime :endDate
       t.boolean :hasAll
 
       t.timestamps null: false

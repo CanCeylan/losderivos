@@ -4,27 +4,27 @@ class CreateRetentions < ActiveRecord::Migration
       t.string :macID
       t.references :client, index: true
       t.datetime :firstLocatedTime
-      t.boolean :w1
-      t.boolean :w2
-      t.boolean :w3
-      t.boolean :w4
-      t.boolean :w5
-      t.boolean :w6
-      t.boolean :w7
-      t.boolean :w8
-      t.boolean :w9
-      t.boolean :w10
-      t.boolean :w11
-      t.boolean :w12
-      t.boolean :m4
-      t.boolean :m5
-      t.boolean :m6
-      t.boolean :m7
-      t.boolean :m8
-      t.boolean :m9
-      t.boolean :m10
-      t.boolean :m11
-      t.boolean :m12
+      t.integer :w1
+      t.integer :w2
+      t.integer :w3
+      t.integer :w4
+      t.integer :w5
+      t.integer :w6
+      t.integer :w7
+      t.integer :w8
+      t.integer :w9
+      t.integer :w10
+      t.integer :w11
+      t.integer :w12
+      t.integer :m4
+      t.integer :m5
+      t.integer :m6
+      t.integer :m7
+      t.integer :m8
+      t.integer :m9
+      t.integer :m10
+      t.integer :m11
+      t.integer :m12
 
       t.timestamps null: false
     end

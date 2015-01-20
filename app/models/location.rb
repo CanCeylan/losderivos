@@ -1,5 +1,5 @@
 class Location < ActiveRecord::Base
-  belongs_to :client
+  belongs_to :client, dependent: :destroy
   has_many :logs
 
   	def self.get_location(x, y, client)
@@ -11,6 +11,6 @@ class Location < ActiveRecord::Base
 				return zone.id
 			end	
 		end
-		0
+		1
 	end
 end

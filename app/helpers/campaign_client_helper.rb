@@ -1,0 +1,2 @@
+module CampaignClientHelper
+end
